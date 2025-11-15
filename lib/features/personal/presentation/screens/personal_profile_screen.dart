@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:go_router/go_router.dart';
 
 class PersonalProfileScreen extends StatefulWidget {
   const PersonalProfileScreen({super.key});
@@ -11,6 +12,37 @@ class PersonalProfileScreen extends StatefulWidget {
 class _PersonalProfileScreenState extends State<PersonalProfileScreen> {
   int _selectedIndex = 5;
 
+  void _onItemTapped(int index) {
+    if (_selectedIndex == index) return;
+    
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    switch (index) {
+      case 0:
+        context.go('/personal-home');
+        break;
+      case 1:
+        context.go('/personal-students');
+        break;
+      case 2:
+        context.go('/personal-exercise-library');
+        break;
+      case 3:
+        context.go('/personal-foods');
+        break;
+      case 4:
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Chat em desenvolvimento')),
+        );
+        break;
+      case 5:
+        // Já está no Perfil
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,6 +50,10 @@ class _PersonalProfileScreenState extends State<PersonalProfileScreen> {
       appBar: AppBar(
         backgroundColor: const Color(0xFF1B2B2A),
         elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => context.go('/personal-home'),
+        ),
         title: Text(
           'Perfil',
           style: GoogleFonts.inter(
@@ -113,7 +149,11 @@ class _PersonalProfileScreenState extends State<PersonalProfileScreen> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Editar perfil em desenvolvimento')),
+                        );
+                      },
                       child: Text(
                         'Editar Perfil',
                         style: GoogleFonts.inter(
@@ -135,9 +175,9 @@ class _PersonalProfileScreenState extends State<PersonalProfileScreen> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () => context.go('/personal-settings'),
                       child: Text(
-                        'Suporte',
+                        'Configurações',
                         style: GoogleFonts.inter(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -160,7 +200,44 @@ class _PersonalProfileScreenState extends State<PersonalProfileScreen> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            backgroundColor: const Color(0xFF2D4A42),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            title: Text(
+                              'Sair',
+                              style: GoogleFonts.inter(color: Colors.white),
+                            ),
+                            content: Text(
+                              'Deseja realmente sair?',
+                              style: GoogleFonts.inter(color: Colors.grey[400]),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text(
+                                  'Cancelar',
+                                  style: GoogleFonts.inter(color: Colors.white),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  context.go('/role-selection');
+                                },
+                                child: Text(
+                                  'Sair',
+                                  style: GoogleFonts.inter(color: const Color(0xFFB85C5C)),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                       child: Text(
                         'Sair',
                         style: GoogleFonts.inter(
@@ -183,14 +260,21 @@ class _PersonalProfileScreenState extends State<PersonalProfileScreen> {
   }
 
   Widget _buildSocialButton(IconData icon) {
-    return Container(
-      width: 56,
-      height: 56,
-      decoration: BoxDecoration(
-        color: const Color(0xFF2D4A42),
-        borderRadius: BorderRadius.circular(28),
+    return GestureDetector(
+      onTap: () {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Redes sociais em desenvolvimento')),
+        );
+      },
+      child: Container(
+        width: 56,
+        height: 56,
+        decoration: BoxDecoration(
+          color: const Color(0xFF2D4A42),
+          borderRadius: BorderRadius.circular(28),
+        ),
+        child: Icon(icon, color: Colors.white, size: 28),
       ),
-      child: Icon(icon, color: Colors.white, size: 28),
     );
   }
 
@@ -211,11 +295,7 @@ class _PersonalProfileScreenState extends State<PersonalProfileScreen> {
         unselectedItemColor: Colors.grey[600],
         currentIndex: _selectedIndex,
         type: BottomNavigationBarType.fixed,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
+        onTap: _onItemTapped,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),

@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 
-// Ajuste de caminhos de acordo com a sua estrutura
+// Imports
 import 'screen/splash_screen.dart';
 import 'screen/login_screen.dart';
 import 'screen/register_screen.dart';
@@ -164,35 +164,36 @@ final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     initialLocation: '/role-selection',
     routes: [
-      GoRoute(
-        path: '/role-selection',
-        builder: (context, state) => const RoleSelectionScreen(),
-      ),
+      // Splash & Role Selection
       GoRoute(
         path: '/',
         builder: (context, state) => const SplashScreen(),
       ),
       GoRoute(
-        path: '/login',
-        builder: (context, state) => const LoginScreen(),
+        path: '/role-selection',
+        builder: (context, state) => const RoleSelectionScreen(),
+      ),
+      
+      // Auth Routes with userType parameter
+      GoRoute(
+        path: '/login/:userType',
+        builder: (context, state) {
+          final userType = state.pathParameters['userType'] ?? 'student';
+          return LoginScreen(userType: userType);
+        },
       ),
       GoRoute(
-        path: '/register',
-        builder: (context, state) => const RegisterScreen(),
+        path: '/register/:userType',
+        builder: (context, state) {
+          final userType = state.pathParameters['userType'] ?? 'student';
+          return RegisterScreen(userType: userType);
+        },
       ),
+      
+      // Personal Trainer Routes
       GoRoute(
         path: '/personal-dashboard',
         builder: (context, state) => const PersonalDashboardScreen(),
-      ),
-      GoRoute(
-        path: '/student-dashboard',
-        builder: (context, state) => const StudentDashboardScreen(),
-      ),
-      GoRoute(
-        path: '/workout/:id',
-        builder: (context, state) => WorkoutDetailScreen(
-          workoutId: state.pathParameters['id']!,
-        ),
       ),
       GoRoute(
         path: '/personal-home',
@@ -229,6 +230,20 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/personal-settings',
         builder: (context, state) => const PersonalSettingsScreen(),
+      ),
+      
+      // Student Routes
+      GoRoute(
+        path: '/student-dashboard',
+        builder: (context, state) => const StudentDashboardScreen(),
+      ),
+      
+      // Workout Routes
+      GoRoute(
+        path: '/workout/:id',
+        builder: (context, state) => WorkoutDetailScreen(
+          workoutId: state.pathParameters['id']!,
+        ),
       ),
     ],
   );

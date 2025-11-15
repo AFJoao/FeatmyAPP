@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:go_router/go_router.dart';
 
 class PersonalStudentsScreen extends StatefulWidget {
   const PersonalStudentsScreen({super.key});
@@ -34,6 +35,37 @@ class _PersonalStudentsScreenState extends State<PersonalStudentsScreen> {
     },
   ];
 
+  void _onItemTapped(int index) {
+    if (_selectedIndex == index) return;
+    
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    switch (index) {
+      case 0:
+        context.go('/personal-home');
+        break;
+      case 1:
+        // Já está em Alunos
+        break;
+      case 2:
+        context.go('/personal-exercise-library');
+        break;
+      case 3:
+        context.go('/personal-foods');
+        break;
+      case 4:
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Chat em desenvolvimento')),
+        );
+        break;
+      case 5:
+        context.go('/personal-profile');
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,6 +73,10 @@ class _PersonalStudentsScreenState extends State<PersonalStudentsScreen> {
       appBar: AppBar(
         backgroundColor: const Color(0xFF1B2B2A),
         elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => context.go('/personal-home'),
+        ),
         title: Text(
           'Alunos',
           style: GoogleFonts.inter(
@@ -83,7 +119,11 @@ class _PersonalStudentsScreenState extends State<PersonalStudentsScreen> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Adicionar Aluno em desenvolvimento')),
+                  );
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -120,72 +160,75 @@ class _PersonalStudentsScreenState extends State<PersonalStudentsScreen> {
   }
 
   Widget _buildStudentCard(Map<String, dynamic> student) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: const Color(0xFF2D4A42),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        children: [
-          Stack(
-            children: [
-              Container(
-                width: 56,
-                height: 56,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFD4A574),
-                  borderRadius: BorderRadius.circular(28),
+    return GestureDetector(
+      onTap: () => context.go('/personal-student-details'),
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: const Color(0xFF2D4A42),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          children: [
+            Stack(
+              children: [
+                Container(
+                  width: 56,
+                  height: 56,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFD4A574),
+                    borderRadius: BorderRadius.circular(28),
+                  ),
+                  child: const Icon(Icons.person, color: Colors.white, size: 28),
                 ),
-                child: const Icon(Icons.person, color: Colors.white, size: 28),
-              ),
-              if (student['active'])
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: Container(
-                    width: 16,
-                    height: 16,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF22C55E),
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: const Color(0xFF1B2B2A), width: 2),
+                if (student['active'])
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: Container(
+                      width: 16,
+                      height: 16,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF22C55E),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: const Color(0xFF1B2B2A), width: 2),
+                      ),
                     ),
                   ),
-                ),
-            ],
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  student['name'],
-                  style: GoogleFonts.inter(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  student['status'],
-                  style: GoogleFonts.inter(
-                    fontSize: 12,
-                    color: Colors.grey[400],
-                  ),
-                ),
               ],
             ),
-          ),
-          Icon(
-            Icons.arrow_forward_ios,
-            color: Colors.grey[600],
-            size: 18,
-          ),
-        ],
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    student['name'],
+                    style: GoogleFonts.inter(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    student['status'],
+                    style: GoogleFonts.inter(
+                      fontSize: 12,
+                      color: Colors.grey[400],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Icon(
+              Icons.arrow_forward_ios,
+              color: Colors.grey[600],
+              size: 18,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -207,11 +250,7 @@ class _PersonalStudentsScreenState extends State<PersonalStudentsScreen> {
         unselectedItemColor: Colors.grey[600],
         currentIndex: _selectedIndex,
         type: BottomNavigationBarType.fixed,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
+        onTap: _onItemTapped,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),

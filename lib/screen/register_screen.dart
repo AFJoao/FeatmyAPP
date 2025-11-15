@@ -4,7 +4,12 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
-  const RegisterScreen({super.key});
+  final String userType; // 'student' ou 'personal'
+  
+  const RegisterScreen({
+    super.key,
+    this.userType = 'student',
+  });
 
   @override
   ConsumerState<RegisterScreen> createState() => _RegisterScreenState();
@@ -21,7 +26,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
   bool _isLoading = false;
-  String _selectedUserType = 'student'; // 'student' or 'personal'
   
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
@@ -136,7 +140,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pop();
-                  context.go('/login');
+                  context.go('/login/${widget.userType}');
                 },
                 child: const Text('Fazer Login'),
               ),
@@ -167,7 +171,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
                     
                     // Back button
                     IconButton(
-                      onPressed: () => context.go('/login'),
+                      onPressed: () => context.go('/login/${widget.userType}'),
                       icon: const Icon(Icons.arrow_back),
                       style: IconButton.styleFrom(
                         backgroundColor: Colors.grey[100],
@@ -181,11 +185,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
                     _buildHeader(),
                     
                     const SizedBox(height: 32),
-                    
-                    // User Type Selection
-                    _buildUserTypeSelection(),
-                    
-                    const SizedBox(height: 24),
                     
                     // Name Field
                     _buildNameField(),
@@ -243,107 +242,15 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
         ),
         const SizedBox(height: 8),
         Text(
-          'Preencha os dados para começar sua jornada',
+          widget.userType == 'personal'
+              ? 'Cadastre-se como Personal Trainer'
+              : 'Preencha os dados para começar sua jornada',
           style: GoogleFonts.inter(
             fontSize: 16,
             color: Colors.grey[600],
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildUserTypeSelection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Tipo de Usuário',
-          style: GoogleFonts.inter(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            color: Colors.black87,
-          ),
-        ),
-        const SizedBox(height: 12),
-        Row(
-          children: [
-            Expanded(
-              child: _buildUserTypeCard(
-                'student',
-                'Aluno',
-                'Quero treinar',
-                Icons.person,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: _buildUserTypeCard(
-                'personal',
-                'Personal',
-                'Quero dar aulas',
-                Icons.fitness_center,
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _buildUserTypeCard(String type, String title, String subtitle, IconData icon) {
-    final isSelected = _selectedUserType == type;
-    
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedUserType = type;
-        });
-      },
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFF2563EB).withOpacity(0.1) : Colors.grey[50],
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: isSelected ? const Color(0xFF2563EB) : Colors.grey[300]!,
-            width: isSelected ? 2 : 1,
-          ),
-        ),
-        child: Column(
-          children: [
-            Container(
-              width: 48,
-              height: 48,
-              decoration: BoxDecoration(
-                color: isSelected ? const Color(0xFF2563EB) : Colors.grey[400],
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: Icon(
-                icon,
-                color: Colors.white,
-                size: 24,
-              ),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              title,
-              style: GoogleFonts.inter(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: isSelected ? const Color(0xFF2563EB) : Colors.black87,
-              ),
-            ),
-            Text(
-              subtitle,
-              style: GoogleFonts.inter(
-                fontSize: 12,
-                color: Colors.grey[600],
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 
@@ -581,7 +488,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
             WidgetSpan(
               child: GestureDetector(
                 onTap: () {
-                  context.go('/login');
+                  context.go('/login/${widget.userType}');
                 },
                 child: Text(
                   'Fazer Login',

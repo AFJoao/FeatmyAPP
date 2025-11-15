@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:go_router/go_router.dart';
 
 class RoleSelectionScreen extends StatelessWidget {
   const RoleSelectionScreen({super.key});
@@ -47,8 +48,9 @@ class RoleSelectionScreen extends StatelessWidget {
                     context,
                     label: 'Aluno',
                     icon: Icons.person,
+                    description: 'Acompanhe seus treinos e progresso',
                     onPressed: () {
-                      Navigator.of(context).pushReplacementNamed('/login');
+                      context.go('/login/student');
                     },
                   ),
                   const SizedBox(height: 20),
@@ -56,8 +58,9 @@ class RoleSelectionScreen extends StatelessWidget {
                     context,
                     label: 'Personal Trainer',
                     icon: Icons.fitness_center,
+                    description: 'Gerencie seus alunos e planos',
                     onPressed: () {
-                      Navigator.of(context).pushReplacementNamed('/login_personal');
+                      context.go('/login/personal');
                     },
                   ),
                 ],
@@ -74,6 +77,7 @@ class RoleSelectionScreen extends StatelessWidget {
     BuildContext context, {
     required String label,
     required IconData icon,
+    required String description,
     required VoidCallback onPressed,
   }) {
     return GestureDetector(
@@ -118,9 +122,7 @@ class RoleSelectionScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    label == 'Aluno'
-                        ? 'Acompanhe seus treinos e progresso'
-                        : 'Gerencie seus alunos e planos',
+                    description,
                     style: GoogleFonts.inter(
                       fontSize: 12,
                       color: Colors.grey[400],
@@ -129,9 +131,9 @@ class RoleSelectionScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Icon(
+            const Icon(
               Icons.arrow_forward,
-              color: const Color(0xFF22C55E),
+              color: Color(0xFF22C55E),
               size: 24,
             ),
           ],

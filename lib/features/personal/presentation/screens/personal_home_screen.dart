@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:go_router/go_router.dart';
 
 class PersonalHomeScreen extends StatefulWidget {
   const PersonalHomeScreen({super.key});
@@ -10,6 +11,39 @@ class PersonalHomeScreen extends StatefulWidget {
 
 class _PersonalHomeScreenState extends State<PersonalHomeScreen> {
   int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    if (_selectedIndex == index) return; // Evita navegação desnecessária
+    
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    // Navegação baseada no índice
+    switch (index) {
+      case 0:
+        // Já está na Home
+        break;
+      case 1:
+        context.go('/personal-students');
+        break;
+      case 2:
+        context.go('/personal-exercise-library');
+        break;
+      case 3:
+        context.go('/personal-foods');
+        break;
+      case 4:
+        // Chat - ainda não implementado
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Chat em desenvolvimento')),
+        );
+        break;
+      case 5:
+        context.go('/personal-profile');
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +89,11 @@ class _PersonalHomeScreenState extends State<PersonalHomeScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.notifications_none, color: Colors.white),
-            onPressed: () {},
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Notificações em desenvolvimento')),
+              );
+            },
           ),
         ],
       ),
@@ -73,6 +111,7 @@ class _PersonalHomeScreenState extends State<PersonalHomeScreen> {
                     label: 'Alunos Ativos',
                     value: '15',
                     color: const Color(0xFF22C55E),
+                    onTap: () => context.go('/personal-students'),
                   ),
                   const SizedBox(height: 16),
                   _buildStatCard(
@@ -80,6 +119,7 @@ class _PersonalHomeScreenState extends State<PersonalHomeScreen> {
                     label: 'Treinos Concluídos',
                     value: '8',
                     color: const Color(0xFF22C55E),
+                    onTap: () => context.go('/personal-exercise-library'),
                   ),
                   const SizedBox(height: 16),
                   _buildStatCard(
@@ -87,6 +127,11 @@ class _PersonalHomeScreenState extends State<PersonalHomeScreen> {
                     label: 'Feedbacks Pendentes',
                     value: '3',
                     color: const Color(0xFF22C55E),
+                    onTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Feedbacks em desenvolvimento')),
+                      );
+                    },
                   ),
                   const SizedBox(height: 32),
                   SizedBox(
@@ -99,7 +144,7 @@ class _PersonalHomeScreenState extends State<PersonalHomeScreen> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () => context.go('/personal-create-exercise'),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -133,7 +178,11 @@ class _PersonalHomeScreenState extends State<PersonalHomeScreen> {
                         child: _buildQuickAccessButton(
                           icon: Icons.calendar_today,
                           label: 'Ver Agenda',
-                          onPressed: () {},
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Agenda em desenvolvimento')),
+                            );
+                          },
                         ),
                       ),
                       const SizedBox(width: 16),
@@ -141,7 +190,7 @@ class _PersonalHomeScreenState extends State<PersonalHomeScreen> {
                         child: _buildQuickAccessButton(
                           icon: Icons.person_add,
                           label: 'Novo Aluno',
-                          onPressed: () {},
+                          onPressed: () => context.go('/personal-students'),
                         ),
                       ),
                     ],
@@ -162,49 +211,59 @@ class _PersonalHomeScreenState extends State<PersonalHomeScreen> {
     required String label,
     required String value,
     required Color color,
+    VoidCallback? onTap,
   }) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: const Color(0xFF2D4A42),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 60,
-            height: 60,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.2),
-              borderRadius: BorderRadius.circular(12),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: const Color(0xFF2D4A42),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(icon, color: color, size: 32),
             ),
-            child: Icon(icon, color: color, size: 32),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  label,
-                  style: GoogleFonts.inter(
-                    fontSize: 14,
-                    color: Colors.grey[400],
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    label,
+                    style: GoogleFonts.inter(
+                      fontSize: 14,
+                      color: Colors.grey[400],
+                    ),
                   ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  value,
-                  style: GoogleFonts.inter(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                    color: color,
+                  const SizedBox(height: 4),
+                  Text(
+                    value,
+                    style: GoogleFonts.inter(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: color,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+            if (onTap != null)
+              Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.grey[600],
+                size: 16,
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -258,11 +317,7 @@ class _PersonalHomeScreenState extends State<PersonalHomeScreen> {
         unselectedItemColor: Colors.grey[600],
         currentIndex: _selectedIndex,
         type: BottomNavigationBarType.fixed,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
+        onTap: _onItemTapped,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),

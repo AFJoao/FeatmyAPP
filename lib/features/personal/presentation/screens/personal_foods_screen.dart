@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:go_router/go_router.dart';
 
 class PersonalFoodsScreen extends StatefulWidget {
   const PersonalFoodsScreen({super.key});
@@ -46,6 +47,37 @@ class _PersonalFoodsScreenState extends State<PersonalFoodsScreen> {
     },
   ];
 
+  void _onItemTapped(int index) {
+    if (_selectedIndex == index) return;
+    
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    switch (index) {
+      case 0:
+        context.go('/personal-home');
+        break;
+      case 1:
+        context.go('/personal-students');
+        break;
+      case 2:
+        context.go('/personal-exercise-library');
+        break;
+      case 3:
+        // Já está em Dietas
+        break;
+      case 4:
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Chat em desenvolvimento')),
+        );
+        break;
+      case 5:
+        context.go('/personal-profile');
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +85,10 @@ class _PersonalFoodsScreenState extends State<PersonalFoodsScreen> {
       appBar: AppBar(
         backgroundColor: const Color(0xFF1B2B2A),
         elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => context.go('/personal-home'),
+        ),
         title: Text(
           'Meus Alimentos',
           style: GoogleFonts.inter(
@@ -64,7 +100,11 @@ class _PersonalFoodsScreenState extends State<PersonalFoodsScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.search, color: Colors.white),
-            onPressed: () {},
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Busca em desenvolvimento')),
+              );
+            },
           ),
         ],
       ),
@@ -74,9 +114,15 @@ class _PersonalFoodsScreenState extends State<PersonalFoodsScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             child: SizedBox(
               width: double.infinity,
-              child: FloatingActionButton(
-                backgroundColor: const Color(0xFF22C55E),
-                onPressed: () {},
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF22C55E),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                onPressed: () => context.go('/personal-add-food'),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -146,7 +192,7 @@ class _PersonalFoodsScreenState extends State<PersonalFoodsScreen> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '${food['calories']} ${food['protein']}, ${food['carbs']}, ${food['fat']}',
+                  '${food['calories']} • ${food['protein']}, ${food['carbs']}, ${food['fat']}',
                   style: GoogleFonts.inter(
                     fontSize: 12,
                     color: const Color(0xFF22C55E),
@@ -157,7 +203,11 @@ class _PersonalFoodsScreenState extends State<PersonalFoodsScreen> {
           ),
           IconButton(
             icon: const Icon(Icons.more_vert, color: Colors.grey),
-            onPressed: () {},
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Opções de ${food['name']}')),
+              );
+            },
           ),
         ],
       ),
@@ -181,11 +231,7 @@ class _PersonalFoodsScreenState extends State<PersonalFoodsScreen> {
         unselectedItemColor: Colors.grey[600],
         currentIndex: _selectedIndex,
         type: BottomNavigationBarType.fixed,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
+        onTap: _onItemTapped,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),

@@ -4,7 +4,12 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
-  const LoginScreen({super.key});
+  final String userType; // 'student' ou 'personal'
+  
+  const LoginScreen({
+    super.key,
+    this.userType = 'student',
+  });
 
   @override
   ConsumerState<LoginScreen> createState() => _LoginScreenState();
@@ -77,9 +82,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
         _isLoading = false;
       });
 
-      // Mock login logic - redirect based on email domain
-      if (_emailController.text.contains('personal')) {
-        context.go('/personal-dashboard');
+      // Redireciona baseado no tipo de usuário
+      if (widget.userType == 'personal') {
+        context.go('/personal-home');
       } else {
         context.go('/student-dashboard');
       }
@@ -162,8 +167,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
             color: const Color(0xFF2563EB),
             borderRadius: BorderRadius.circular(16),
           ),
-          child: const Icon(
-            Icons.fitness_center,
+          child: Icon(
+            widget.userType == 'personal' ? Icons.fitness_center : Icons.person,
             color: Colors.white,
             size: 28,
           ),
@@ -179,7 +184,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
         ),
         const SizedBox(height: 8),
         Text(
-          'Faça login para continuar sua jornada fitness',
+          widget.userType == 'personal' 
+              ? 'Faça login como Personal Trainer'
+              : 'Faça login para continuar sua jornada fitness',
           style: GoogleFonts.inter(
             fontSize: 16,
             color: Colors.grey[600],
@@ -380,7 +387,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
             WidgetSpan(
               child: GestureDetector(
                 onTap: () {
-                  context.go('/register');
+                  context.go('/register/${widget.userType}');
                 },
                 child: Text(
                   'Cadastre-se',

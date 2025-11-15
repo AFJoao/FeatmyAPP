@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:go_router/go_router.dart';
 
 class PersonalExerciseLibraryScreen extends StatefulWidget {
   const PersonalExerciseLibraryScreen({super.key});
@@ -19,6 +20,37 @@ class _PersonalExerciseLibraryScreenState
     'Pernas': ['Agachamento Livre', 'Leg Press'],
   };
 
+  void _onItemTapped(int index) {
+    if (_selectedIndex == index) return;
+    
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    switch (index) {
+      case 0:
+        context.go('/personal-home');
+        break;
+      case 1:
+        context.go('/personal-students');
+        break;
+      case 2:
+        // Já está em Treinos
+        break;
+      case 3:
+        context.go('/personal-foods');
+        break;
+      case 4:
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Chat em desenvolvimento')),
+        );
+        break;
+      case 5:
+        context.go('/personal-profile');
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,6 +58,10 @@ class _PersonalExerciseLibraryScreenState
       appBar: AppBar(
         backgroundColor: const Color(0xFF1B2B2A),
         elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => context.go('/personal-home'),
+        ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -50,11 +86,19 @@ class _PersonalExerciseLibraryScreenState
         actions: [
           IconButton(
             icon: const Icon(Icons.search, color: Colors.white),
-            onPressed: () {},
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Busca em desenvolvimento')),
+              );
+            },
           ),
           IconButton(
             icon: const Icon(Icons.grid_view, color: Colors.white),
-            onPressed: () {},
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Visualização em grade em desenvolvimento')),
+              );
+            },
           ),
         ],
       ),
@@ -71,7 +115,7 @@ class _PersonalExerciseLibraryScreenState
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xFF22C55E),
-        onPressed: () {},
+        onPressed: () => context.go('/personal-create-exercise'),
         child: const Icon(Icons.add, color: Colors.black, size: 28),
       ),
       bottomNavigationBar: _buildBottomNavigationBar(),
@@ -133,7 +177,11 @@ class _PersonalExerciseLibraryScreenState
           FloatingActionButton(
             mini: true,
             backgroundColor: const Color(0xFF22C55E),
-            onPressed: () {},
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('$exerciseName adicionado')),
+              );
+            },
             child: const Icon(Icons.add, color: Colors.black, size: 20),
           ),
         ],
@@ -158,11 +206,7 @@ class _PersonalExerciseLibraryScreenState
         unselectedItemColor: Colors.grey[600],
         currentIndex: _selectedIndex,
         type: BottomNavigationBarType.fixed,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
+        onTap: _onItemTapped,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
