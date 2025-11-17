@@ -13,12 +13,30 @@ class PersonalExerciseLibraryScreen extends StatefulWidget {
 class _PersonalExerciseLibraryScreenState
     extends State<PersonalExerciseLibraryScreen> {
   int _selectedIndex = 2;
+  final TextEditingController _searchController = TextEditingController();
+  String _searchQuery = '';
 
-  final Map<String, List<String>> _exercises = {
-    'Peito': ['Supino Reto', 'Flexão de Braços', 'Crucifixo com Halteres'],
-    'Costas': ['Remada Curvada', 'Puxada Alta (Pulley)'],
-    'Pernas': ['Agachamento Livre', 'Leg Press'],
+  final Map<String, List<Map<String, dynamic>>> _exercises = {
+    'Peito': [
+      {'name': 'Supino Reto', 'icon': Icons.fitness_center},
+      {'name': 'Flexão de Braços', 'icon': Icons.fitness_center},
+      {'name': 'Crucifixo com Halteres', 'icon': Icons.fitness_center},
+    ],
+    'Costas': [
+      {'name': 'Remada Curvada', 'icon': Icons.fitness_center},
+      {'name': 'Puxada Alta (Pulley)', 'icon': Icons.fitness_center},
+    ],
+    'Pernas': [
+      {'name': 'Agachamento Livre', 'icon': Icons.fitness_center},
+      {'name': 'Leg Press', 'icon': Icons.fitness_center},
+    ],
   };
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   void _onItemTapped(int index) {
     if (_selectedIndex == index) return;
@@ -51,8 +69,32 @@ class _PersonalExerciseLibraryScreenState
     }
   }
 
+  Map<String, List<Map<String, dynamic>>> _getFilteredExercises() {
+    if (_searchQuery.isEmpty) {
+      return _exercises;
+    }
+
+    Map<String, List<Map<String, dynamic>>> filtered = {};
+    _exercises.forEach((category, exercises) {
+      var filteredExercises = exercises
+          .where((exercise) => exercise['name']
+              .toString()
+              .toLowerCase()
+              .contains(_searchQuery.toLowerCase()))
+          .toList();
+      
+      if (filteredExercises.isNotEmpty) {
+        filtered[category] = filteredExercises;
+      }
+    });
+
+    return filtered;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final filteredExercises = _getFilteredExercises();
+
     return Scaffold(
       backgroundColor: const Color(0xFF1B2B2A),
       appBar: AppBar(
@@ -85,33 +127,95 @@ class _PersonalExerciseLibraryScreenState
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.search, color: Colors.white),
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Busca em desenvolvimento')),
-              );
-            },
-          ),
-          IconButton(
             icon: const Icon(Icons.grid_view, color: Colors.white),
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Visualização em grade em desenvolvimento')),
+                const SnackBar(
+                  content: Text('Visualização em grade em desenvolvimento'),
+                  duration: Duration(seconds: 2),
+                ),
               );
             },
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: _exercises.entries.map((entry) {
-              return _buildExerciseCategory(entry.key, entry.value);
-            }).toList(),
+      body: Column(
+        children: [
+          // Search Bar
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            child: Container(
+              decoration: BoxDecoration(
+                color: const Color(0xFF2D4A42),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: TextField(
+                controller: _searchController,
+                style: GoogleFonts.inter(color: Colors.white),
+                decoration: InputDecoration(
+                  hintText: 'Buscar exercícios...',
+                  hintStyle: GoogleFonts.inter(color: Colors.grey[600]),
+                  prefixIcon: Icon(Icons.search, color: Colors.grey[600]),
+                  suffixIcon: _searchQuery.isNotEmpty
+                      ? IconButton(
+                          icon: Icon(Icons.clear, color: Colors.grey[600]),
+                          onPressed: () {
+                            setState(() {
+                              _searchController.clear();
+                              _searchQuery = '';
+                            });
+                          },
+                        )
+                      : null,
+                  border: InputBorder.none,
+                  contentPadding: const EdgeInsets.symmetric(vertical: 12),
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    _searchQuery = value;
+                  });
+                },
+              ),
+            ),
           ),
-        ),
+
+          // Exercise List
+          Expanded(
+            child: filteredExercises.isEmpty
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.search_off,
+                          size: 64,
+                          color: Colors.grey[600],
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          'Nenhum exercício encontrado',
+                          style: GoogleFonts.inter(
+                            fontSize: 16,
+                            color: Colors.grey[400],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: filteredExercises.entries.map((entry) {
+                          return _buildExerciseCategory(
+                              entry.key, entry.value);
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xFF22C55E),
@@ -122,10 +226,12 @@ class _PersonalExerciseLibraryScreenState
     );
   }
 
-  Widget _buildExerciseCategory(String category, List<String> exercises) {
+  Widget _buildExerciseCategory(
+      String category, List<Map<String, dynamic>> exercises) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const SizedBox(height: 16),
         Text(
           category,
           style: GoogleFonts.inter(
@@ -136,14 +242,14 @@ class _PersonalExerciseLibraryScreenState
         ),
         const SizedBox(height: 12),
         ...exercises.map((exercise) {
-          return _buildExerciseItem(exercise);
+          return _buildExerciseItem(exercise['name'], exercise['icon']);
         }).toList(),
-        const SizedBox(height: 24),
+        const SizedBox(height: 8),
       ],
     );
   }
 
-  Widget _buildExerciseItem(String exerciseName) {
+  Widget _buildExerciseItem(String exerciseName, IconData icon) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
@@ -160,8 +266,7 @@ class _PersonalExerciseLibraryScreenState
               color: const Color(0xFF22C55E).withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(Icons.fitness_center,
-                color: Color(0xFF22C55E), size: 28),
+            child: Icon(icon, color: const Color(0xFF22C55E), size: 28),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -174,15 +279,25 @@ class _PersonalExerciseLibraryScreenState
               ),
             ),
           ),
-          FloatingActionButton(
-            mini: true,
-            backgroundColor: const Color(0xFF22C55E),
-            onPressed: () {
+          GestureDetector(
+            onTap: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('$exerciseName adicionado')),
+                SnackBar(
+                  content: Text('$exerciseName adicionado'),
+                  backgroundColor: const Color(0xFF22C55E),
+                  duration: const Duration(seconds: 1),
+                ),
               );
             },
-            child: const Icon(Icons.add, color: Colors.black, size: 20),
+            child: Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: const Color(0xFF22C55E),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Icon(Icons.add, color: Colors.black, size: 20),
+            ),
           ),
         ],
       ),

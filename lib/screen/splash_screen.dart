@@ -23,7 +23,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   void initState() {
     super.initState();
     _initializeAnimations();
-    _navigateToLogin();
+    _navigateToRoleSelection();
   }
 
   void _initializeAnimations() {
@@ -67,10 +67,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
     });
   }
 
-  void _navigateToLogin() {
+  void _navigateToRoleSelection() {
     Timer(const Duration(seconds: 3), () {
       if (mounted) {
-        context.go('/login');
+        context.go('/role-selection');
       }
     });
   }

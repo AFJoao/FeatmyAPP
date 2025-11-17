@@ -34,13 +34,55 @@ class _PersonalProfileScreenState extends State<PersonalProfileScreen> {
         break;
       case 4:
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Chat em desenvolvimento')),
+          const SnackBar(
+            content: Text('Chat em desenvolvimento'),
+            duration: Duration(seconds: 2),
+          ),
         );
         break;
       case 5:
         // Já está no Perfil
         break;
     }
+  }
+
+  void _showLogoutDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFF2D4A42),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        title: Text(
+          'Sair',
+          style: GoogleFonts.inter(color: Colors.white),
+        ),
+        content: Text(
+          'Deseja realmente sair?',
+          style: GoogleFonts.inter(color: Colors.grey[400]),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(
+              'Cancelar',
+              style: GoogleFonts.inter(color: Colors.white),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              context.go('/role-selection');
+            },
+            child: Text(
+              'Sair',
+              style: GoogleFonts.inter(color: const Color(0xFFB85C5C)),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -131,11 +173,11 @@ class _PersonalProfileScreenState extends State<PersonalProfileScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      _buildSocialButton(Icons.camera_alt),
+                      _buildSocialButton(Icons.camera_alt, 'Instagram'),
                       const SizedBox(width: 20),
-                      _buildSocialButton(Icons.business),
+                      _buildSocialButton(Icons.business, 'LinkedIn'),
                       const SizedBox(width: 20),
-                      _buildSocialButton(Icons.play_arrow),
+                      _buildSocialButton(Icons.play_arrow, 'YouTube'),
                     ],
                   ),
                   const SizedBox(height: 32),
@@ -151,7 +193,10 @@ class _PersonalProfileScreenState extends State<PersonalProfileScreen> {
                       ),
                       onPressed: () {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Editar perfil em desenvolvimento')),
+                          const SnackBar(
+                            content: Text('Editar perfil em desenvolvimento'),
+                            duration: Duration(seconds: 2),
+                          ),
                         );
                       },
                       child: Text(
@@ -200,44 +245,7 @@ class _PersonalProfileScreenState extends State<PersonalProfileScreen> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                            backgroundColor: const Color(0xFF2D4A42),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            title: Text(
-                              'Sair',
-                              style: GoogleFonts.inter(color: Colors.white),
-                            ),
-                            content: Text(
-                              'Deseja realmente sair?',
-                              style: GoogleFonts.inter(color: Colors.grey[400]),
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.pop(context),
-                                child: Text(
-                                  'Cancelar',
-                                  style: GoogleFonts.inter(color: Colors.white),
-                                ),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                  context.go('/role-selection');
-                                },
-                                child: Text(
-                                  'Sair',
-                                  style: GoogleFonts.inter(color: const Color(0xFFB85C5C)),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
+                      onPressed: _showLogoutDialog,
                       child: Text(
                         'Sair',
                         style: GoogleFonts.inter(
@@ -259,11 +267,14 @@ class _PersonalProfileScreenState extends State<PersonalProfileScreen> {
     );
   }
 
-  Widget _buildSocialButton(IconData icon) {
+  Widget _buildSocialButton(IconData icon, String platform) {
     return GestureDetector(
       onTap: () {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Redes sociais em desenvolvimento')),
+          SnackBar(
+            content: Text('Abrir $platform em desenvolvimento'),
+            duration: const Duration(seconds: 2),
+          ),
         );
       },
       child: Container(

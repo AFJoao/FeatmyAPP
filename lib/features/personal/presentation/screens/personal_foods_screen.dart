@@ -11,6 +11,8 @@ class PersonalFoodsScreen extends StatefulWidget {
 
 class _PersonalFoodsScreenState extends State<PersonalFoodsScreen> {
   int _selectedIndex = 3;
+  final TextEditingController _searchController = TextEditingController();
+  String _searchQuery = '';
 
   final List<Map<String, dynamic>> _foods = [
     {
@@ -47,6 +49,12 @@ class _PersonalFoodsScreenState extends State<PersonalFoodsScreen> {
     },
   ];
 
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
   void _onItemTapped(int index) {
     if (_selectedIndex == index) return;
     
@@ -78,8 +86,130 @@ class _PersonalFoodsScreenState extends State<PersonalFoodsScreen> {
     }
   }
 
+  List<Map<String, dynamic>> _getFilteredFoods() {
+    if (_searchQuery.isEmpty) {
+      return _foods;
+    }
+
+    return _foods
+        .where((food) =>
+            food['name'].toLowerCase().contains(_searchQuery.toLowerCase()))
+        .toList();
+  }
+
+  void _showFoodOptions(Map<String, dynamic> food) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: const Color(0xFF2D4A42),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (context) => Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              food['name'],
+              style: GoogleFonts.inter(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 24),
+            ListTile(
+              leading: const Icon(Icons.edit, color: Color(0xFF22C55E)),
+              title: Text(
+                'Editar Alimento',
+                style: GoogleFonts.inter(color: Colors.white),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Edição em desenvolvimento')),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.share, color: Color(0xFF22C55E)),
+              title: Text(
+                'Compartilhar',
+                style: GoogleFonts.inter(color: Colors.white),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                      content: Text('Compartilhamento em desenvolvimento')),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.delete, color: Colors.red),
+              title: Text(
+                'Excluir',
+                style: GoogleFonts.inter(color: Colors.white),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                _showDeleteConfirmation(food['name']);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showDeleteConfirmation(String foodName) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFF2D4A42),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        title: Text(
+          'Excluir Alimento',
+          style: GoogleFonts.inter(color: Colors.white),
+        ),
+        content: Text(
+          'Deseja realmente excluir "$foodName"?',
+          style: GoogleFonts.inter(color: Colors.grey[400]),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(
+              'Cancelar',
+              style: GoogleFonts.inter(color: Colors.white),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('$foodName excluído'),
+                  backgroundColor: const Color(0xFF22C55E),
+                ),
+              );
+            },
+            child: Text(
+              'Excluir',
+              style: GoogleFonts.inter(color: Colors.red),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final filteredFoods = _getFilteredFoods();
+
     return Scaffold(
       backgroundColor: const Color(0xFF1B2B2A),
       appBar: AppBar(
@@ -97,21 +227,50 @@ class _PersonalFoodsScreenState extends State<PersonalFoodsScreen> {
             color: Colors.white,
           ),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search, color: Colors.white),
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Busca em desenvolvimento')),
-              );
-            },
-          ),
-        ],
       ),
       body: Column(
         children: [
+          // Search Bar
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            child: Container(
+              decoration: BoxDecoration(
+                color: const Color(0xFF2D4A42),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: TextField(
+                controller: _searchController,
+                style: GoogleFonts.inter(color: Colors.white),
+                decoration: InputDecoration(
+                  hintText: 'Buscar alimentos...',
+                  hintStyle: GoogleFonts.inter(color: Colors.grey[600]),
+                  prefixIcon: Icon(Icons.search, color: Colors.grey[600]),
+                  suffixIcon: _searchQuery.isNotEmpty
+                      ? IconButton(
+                          icon: Icon(Icons.clear, color: Colors.grey[600]),
+                          onPressed: () {
+                            setState(() {
+                              _searchController.clear();
+                              _searchQuery = '';
+                            });
+                          },
+                        )
+                      : null,
+                  border: InputBorder.none,
+                  contentPadding: const EdgeInsets.symmetric(vertical: 12),
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    _searchQuery = value;
+                  });
+                },
+              ),
+            ),
+          ),
+
+          // Add Food Button
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
             child: SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -141,15 +300,40 @@ class _PersonalFoodsScreenState extends State<PersonalFoodsScreen> {
               ),
             ),
           ),
+
+          const SizedBox(height: 16),
+
+          // Food List
           Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              itemCount: _foods.length,
-              itemBuilder: (context, index) {
-                final food = _foods[index];
-                return _buildFoodCard(food);
-              },
-            ),
+            child: filteredFoods.isEmpty
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.search_off,
+                          size: 64,
+                          color: Colors.grey[600],
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          'Nenhum alimento encontrado',
+                          style: GoogleFonts.inter(
+                            fontSize: 16,
+                            color: Colors.grey[400],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    itemCount: filteredFoods.length,
+                    itemBuilder: (context, index) {
+                      final food = filteredFoods[index];
+                      return _buildFoodCard(food);
+                    },
+                  ),
           ),
         ],
       ),
@@ -174,8 +358,7 @@ class _PersonalFoodsScreenState extends State<PersonalFoodsScreen> {
               color: const Color(0xFF22C55E).withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Icon(food['icon'],
-                color: const Color(0xFF22C55E), size: 28),
+            child: Icon(food['icon'], color: const Color(0xFF22C55E), size: 28),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -203,11 +386,7 @@ class _PersonalFoodsScreenState extends State<PersonalFoodsScreen> {
           ),
           IconButton(
             icon: const Icon(Icons.more_vert, color: Colors.grey),
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Opções de ${food['name']}')),
-              );
-            },
+            onPressed: () => _showFoodOptions(food),
           ),
         ],
       ),

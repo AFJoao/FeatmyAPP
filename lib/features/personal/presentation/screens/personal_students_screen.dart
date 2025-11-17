@@ -11,6 +11,8 @@ class PersonalStudentsScreen extends StatefulWidget {
 
 class _PersonalStudentsScreenState extends State<PersonalStudentsScreen> {
   int _selectedIndex = 1;
+  final TextEditingController _searchController = TextEditingController();
+  String _searchQuery = '';
 
   final List<Map<String, dynamic>> _students = [
     {
@@ -35,6 +37,12 @@ class _PersonalStudentsScreenState extends State<PersonalStudentsScreen> {
     },
   ];
 
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
   void _onItemTapped(int index) {
     if (_selectedIndex == index) return;
     
@@ -57,7 +65,10 @@ class _PersonalStudentsScreenState extends State<PersonalStudentsScreen> {
         break;
       case 4:
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Chat em desenvolvimento')),
+          const SnackBar(
+            content: Text('Chat em desenvolvimento'),
+            duration: Duration(seconds: 2),
+          ),
         );
         break;
       case 5:
@@ -66,8 +77,21 @@ class _PersonalStudentsScreenState extends State<PersonalStudentsScreen> {
     }
   }
 
+  List<Map<String, dynamic>> _getFilteredStudents() {
+    if (_searchQuery.isEmpty) {
+      return _students;
+    }
+
+    return _students
+        .where((student) =>
+            student['name'].toLowerCase().contains(_searchQuery.toLowerCase()))
+        .toList();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final filteredStudents = _getFilteredStudents();
+
     return Scaffold(
       backgroundColor: const Color(0xFF1B2B2A),
       appBar: AppBar(
@@ -88,6 +112,7 @@ class _PersonalStudentsScreenState extends State<PersonalStudentsScreen> {
       ),
       body: Column(
         children: [
+          // Search Bar
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             child: Container(
@@ -96,17 +121,36 @@ class _PersonalStudentsScreenState extends State<PersonalStudentsScreen> {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: TextField(
+                controller: _searchController,
                 style: GoogleFonts.inter(color: Colors.white),
                 decoration: InputDecoration(
                   hintText: 'Buscar por nome...',
                   hintStyle: GoogleFonts.inter(color: Colors.grey[600]),
                   prefixIcon: Icon(Icons.search, color: Colors.grey[600]),
+                  suffixIcon: _searchQuery.isNotEmpty
+                      ? IconButton(
+                          icon: Icon(Icons.clear, color: Colors.grey[600]),
+                          onPressed: () {
+                            setState(() {
+                              _searchController.clear();
+                              _searchQuery = '';
+                            });
+                          },
+                        )
+                      : null,
                   border: InputBorder.none,
                   contentPadding: const EdgeInsets.symmetric(vertical: 12),
                 ),
+                onChanged: (value) {
+                  setState(() {
+                    _searchQuery = value;
+                  });
+                },
               ),
             ),
           ),
+
+          // Add Student Button
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: SizedBox(
@@ -121,7 +165,10 @@ class _PersonalStudentsScreenState extends State<PersonalStudentsScreen> {
                 ),
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Adicionar Aluno em desenvolvimento')),
+                    const SnackBar(
+                      content: Text('Adicionar Aluno em desenvolvimento'),
+                      duration: Duration(seconds: 2),
+                    ),
                   );
                 },
                 child: Row(
@@ -142,16 +189,40 @@ class _PersonalStudentsScreenState extends State<PersonalStudentsScreen> {
               ),
             ),
           ),
+
           const SizedBox(height: 16),
+
+          // Students List
           Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              itemCount: _students.length,
-              itemBuilder: (context, index) {
-                final student = _students[index];
-                return _buildStudentCard(student);
-              },
-            ),
+            child: filteredStudents.isEmpty
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.search_off,
+                          size: 64,
+                          color: Colors.grey[600],
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          'Nenhum aluno encontrado',
+                          style: GoogleFonts.inter(
+                            fontSize: 16,
+                            color: Colors.grey[400],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    itemCount: filteredStudents.length,
+                    itemBuilder: (context, index) {
+                      final student = filteredStudents[index];
+                      return _buildStudentCard(student);
+                    },
+                  ),
           ),
         ],
       ),
@@ -192,7 +263,8 @@ class _PersonalStudentsScreenState extends State<PersonalStudentsScreen> {
                       decoration: BoxDecoration(
                         color: const Color(0xFF22C55E),
                         borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: const Color(0xFF1B2B2A), width: 2),
+                        border: Border.all(
+                            color: const Color(0xFF1B2B2A), width: 2),
                       ),
                     ),
                   ),

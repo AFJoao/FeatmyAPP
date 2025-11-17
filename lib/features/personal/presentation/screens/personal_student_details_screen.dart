@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:go_router/go_router.dart';
 
 class PersonalStudentDetailsScreen extends StatefulWidget {
   const PersonalStudentDetailsScreen({super.key});
@@ -13,6 +14,37 @@ class _PersonalStudentDetailsScreenState
     extends State<PersonalStudentDetailsScreen> {
   int _selectedIndex = 1;
 
+  void _onItemTapped(int index) {
+    if (_selectedIndex == index) return;
+    
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    switch (index) {
+      case 0:
+        context.go('/personal-home');
+        break;
+      case 1:
+        context.go('/personal-students');
+        break;
+      case 2:
+        context.go('/personal-exercise-library');
+        break;
+      case 3:
+        context.go('/personal-foods');
+        break;
+      case 4:
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Chat em desenvolvimento')),
+        );
+        break;
+      case 5:
+        context.go('/personal-profile');
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +54,7 @@ class _PersonalStudentDetailsScreenState
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.go('/personal-students'),
         ),
         title: Text(
           'Detalhes do Aluno',
@@ -35,7 +67,9 @@ class _PersonalStudentDetailsScreenState
         actions: [
           IconButton(
             icon: const Icon(Icons.more_vert, color: Colors.white),
-            onPressed: () {},
+            onPressed: () {
+              _showMoreOptions();
+            },
           ),
         ],
       ),
@@ -65,7 +99,7 @@ class _PersonalStudentDetailsScreenState
                 color: Colors.white,
               ),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 8),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
               decoration: BoxDecoration(
@@ -96,7 +130,11 @@ class _PersonalStudentDetailsScreenState
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Criar treino em desenvolvimento')),
+                        );
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -126,7 +164,11 @@ class _PersonalStudentDetailsScreenState
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Criar dieta em desenvolvimento')),
+                        );
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -156,7 +198,11 @@ class _PersonalStudentDetailsScreenState
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Chat em desenvolvimento')),
+                        );
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -189,6 +235,63 @@ class _PersonalStudentDetailsScreenState
         ),
       ),
       bottomNavigationBar: _buildBottomNavigationBar(),
+    );
+  }
+
+  void _showMoreOptions() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: const Color(0xFF2D4A42),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (context) => Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.edit, color: Color(0xFF22C55E)),
+              title: Text(
+                'Editar Informações',
+                style: GoogleFonts.inter(color: Colors.white),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Edição em desenvolvimento')),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.archive, color: Colors.orange),
+              title: Text(
+                'Arquivar Aluno',
+                style: GoogleFonts.inter(color: Colors.white),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Arquivar em desenvolvimento')),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.delete, color: Colors.red),
+              title: Text(
+                'Remover Aluno',
+                style: GoogleFonts.inter(color: Colors.white),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Remoção em desenvolvimento')),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -267,18 +370,32 @@ class _PersonalStudentDetailsScreenState
           ),
         ),
         const SizedBox(height: 16),
-        Container(
-          height: 200,
-          decoration: BoxDecoration(
-            color: const Color(0xFF2D4A42),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Center(
-            child: Text(
-              'Gráfico de Progresso',
-              style: GoogleFonts.inter(
-                fontSize: 14,
-                color: Colors.grey[400],
+        GestureDetector(
+          onTap: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Visualização de gráficos em desenvolvimento')),
+            );
+          },
+          child: Container(
+            height: 200,
+            decoration: BoxDecoration(
+              color: const Color(0xFF2D4A42),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.bar_chart, color: Color(0xFF22C55E), size: 48),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Gráfico de Progresso',
+                    style: GoogleFonts.inter(
+                      fontSize: 14,
+                      color: Colors.grey[400],
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -308,29 +425,36 @@ class _PersonalStudentDetailsScreenState
   }
 
   Widget _buildDocumentItem(String title) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: const Color(0xFF2D4A42),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        children: [
-          Icon(Icons.description, color: const Color(0xFF22C55E), size: 24),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(
-              title,
-              style: GoogleFonts.inter(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+    return GestureDetector(
+      onTap: () {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Visualizar $title em desenvolvimento')),
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: const Color(0xFF2D4A42),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          children: [
+            const Icon(Icons.description, color: Color(0xFF22C55E), size: 24),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                title,
+                style: GoogleFonts.inter(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
             ),
-          ),
-          Icon(Icons.arrow_forward_ios,
-              color: Colors.grey[600], size: 18),
-        ],
+            Icon(Icons.arrow_forward_ios,
+                color: Colors.grey[600], size: 18),
+          ],
+        ),
       ),
     );
   }
@@ -352,11 +476,7 @@ class _PersonalStudentDetailsScreenState
         unselectedItemColor: Colors.grey[600],
         currentIndex: _selectedIndex,
         type: BottomNavigationBarType.fixed,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
+        onTap: _onItemTapped,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),

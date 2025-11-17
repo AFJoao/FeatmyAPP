@@ -13,13 +13,12 @@ class _PersonalHomeScreenState extends State<PersonalHomeScreen> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
-    if (_selectedIndex == index) return; // Evita navegação desnecessária
+    if (_selectedIndex == index) return;
     
     setState(() {
       _selectedIndex = index;
     });
 
-    // Navegação baseada no índice
     switch (index) {
       case 0:
         // Já está na Home
@@ -34,9 +33,11 @@ class _PersonalHomeScreenState extends State<PersonalHomeScreen> {
         context.go('/personal-foods');
         break;
       case 4:
-        // Chat - ainda não implementado
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Chat em desenvolvimento')),
+          const SnackBar(
+            content: Text('Chat em desenvolvimento'),
+            duration: Duration(seconds: 2),
+          ),
         );
         break;
       case 5:
@@ -91,7 +92,10 @@ class _PersonalHomeScreenState extends State<PersonalHomeScreen> {
             icon: const Icon(Icons.notifications_none, color: Colors.white),
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Notificações em desenvolvimento')),
+                const SnackBar(
+                  content: Text('Notificações em desenvolvimento'),
+                  duration: Duration(seconds: 2),
+                ),
               );
             },
           ),
@@ -129,7 +133,10 @@ class _PersonalHomeScreenState extends State<PersonalHomeScreen> {
                     color: const Color(0xFF22C55E),
                     onTap: () {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Feedbacks em desenvolvimento')),
+                        const SnackBar(
+                          content: Text('Feedbacks em desenvolvimento'),
+                          duration: Duration(seconds: 2),
+                        ),
                       );
                     },
                   ),
@@ -180,7 +187,10 @@ class _PersonalHomeScreenState extends State<PersonalHomeScreen> {
                           label: 'Ver Agenda',
                           onPressed: () {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Agenda em desenvolvimento')),
+                              const SnackBar(
+                                content: Text('Agenda em desenvolvimento'),
+                                duration: Duration(seconds: 2),
+                              ),
                             );
                           },
                         ),

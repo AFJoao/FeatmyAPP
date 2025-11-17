@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:go_router/go_router.dart';
 
 class PersonalSettingsScreen extends StatefulWidget {
   const PersonalSettingsScreen({super.key});
@@ -12,6 +13,76 @@ class _PersonalSettingsScreenState extends State<PersonalSettingsScreen> {
   int _selectedIndex = 5;
   bool _notificationsEnabled = true;
 
+  void _onItemTapped(int index) {
+    if (_selectedIndex == index) return;
+    
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    switch (index) {
+      case 0:
+        context.go('/personal-home');
+        break;
+      case 1:
+        context.go('/personal-students');
+        break;
+      case 2:
+        context.go('/personal-exercise-library');
+        break;
+      case 3:
+        context.go('/personal-foods');
+        break;
+      case 4:
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Chat em desenvolvimento')),
+        );
+        break;
+      case 5:
+        context.go('/personal-profile');
+        break;
+    }
+  }
+
+  void _showLogoutDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFF2D4A42),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        title: Text(
+          'Sair',
+          style: GoogleFonts.inter(color: Colors.white),
+        ),
+        content: Text(
+          'Deseja realmente sair da sua conta?',
+          style: GoogleFonts.inter(color: Colors.grey[400]),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(
+              'Cancelar',
+              style: GoogleFonts.inter(color: Colors.white),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              context.go('/role-selection');
+            },
+            child: Text(
+              'Sair',
+              style: GoogleFonts.inter(color: const Color(0xFFB85C5C)),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +92,7 @@ class _PersonalSettingsScreenState extends State<PersonalSettingsScreen> {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.go('/personal-profile'),
         ),
         title: Text(
           'Configurações',
@@ -46,6 +117,15 @@ class _PersonalSettingsScreenState extends State<PersonalSettingsScreen> {
                     setState(() {
                       _notificationsEnabled = value;
                     });
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          value 
+                            ? 'Notificações ativadas' 
+                            : 'Notificações desativadas',
+                        ),
+                      ),
+                    );
                   },
                   activeColor: const Color(0xFF22C55E),
                 ),
@@ -61,7 +141,11 @@ class _PersonalSettingsScreenState extends State<PersonalSettingsScreen> {
                     color: Colors.grey[400],
                   ),
                 ),
-                onTap: () {},
+                onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Seleção de tema em desenvolvimento')),
+                  );
+                },
               ),
               const SizedBox(height: 12),
               _buildSettingItem(
@@ -74,7 +158,11 @@ class _PersonalSettingsScreenState extends State<PersonalSettingsScreen> {
                     color: Colors.grey[400],
                   ),
                 ),
-                onTap: () {},
+                onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Seleção de idioma em desenvolvimento')),
+                  );
+                },
               ),
               const SizedBox(height: 12),
               _buildSettingItem(
@@ -82,7 +170,11 @@ class _PersonalSettingsScreenState extends State<PersonalSettingsScreen> {
                 label: 'Suporte & Ajuda',
                 trailing: Icon(Icons.arrow_forward_ios,
                     color: Colors.grey[600], size: 18),
-                onTap: () {},
+                onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Suporte em desenvolvimento')),
+                  );
+                },
               ),
               const SizedBox(height: 32),
               SizedBox(
@@ -98,7 +190,7 @@ class _PersonalSettingsScreenState extends State<PersonalSettingsScreen> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: _showLogoutDialog,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -185,11 +277,7 @@ class _PersonalSettingsScreenState extends State<PersonalSettingsScreen> {
         unselectedItemColor: Colors.grey[600],
         currentIndex: _selectedIndex,
         type: BottomNavigationBarType.fixed,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
+        onTap: _onItemTapped,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
