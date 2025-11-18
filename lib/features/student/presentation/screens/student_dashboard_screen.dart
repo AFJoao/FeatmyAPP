@@ -94,169 +94,175 @@ class _StudentDashboardScreenState extends ConsumerState<StudentDashboardScreen>
   }
 
   Widget _buildTodayWorkoutSection() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: const Color(0xFF2D4A42),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF22C55E).withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(
-                  Icons.fitness_center,
-                  color: Color(0xFF22C55E),
-                  size: 24,
-                ),
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedIndex = 1;
+        });
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: const Color(0xFF2D4A42),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: const Color(0xFF22C55E).withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(12),
               ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Treino do Dia',
-                      style: GoogleFonts.inter(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Text(
-                      'Peito e Tríceps - 50 min',
-                      style: GoogleFonts.inter(
-                        fontSize: 14,
-                        color: Colors.grey[300],
-                      ),
-                    ),
-                  ],
-                ),
+              child: const Icon(
+                Icons.fitness_center,
+                color: Color(0xFF22C55E),
+                size: 24,
               ),
-              const Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 16),
-            ],
-          ),
-        ],
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Treino do Dia',
+                    style: GoogleFonts.inter(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    'Peito e Tríceps - 50 min',
+                    style: GoogleFonts.inter(
+                      fontSize: 14,
+                      color: Colors.grey[300],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 16),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildDietSection() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: const Color(0xFF2D4A42),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF22C55E).withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(
-                  Icons.restaurant,
-                  color: Color(0xFF22C55E),
-                  size: 24,
-                ),
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedIndex = 2;
+        });
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: const Color(0xFF2D4A42),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: const Color(0xFF22C55E).withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(12),
               ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Dieta do Dia',
-                      style: GoogleFonts.inter(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Text(
-                      '2500 kcal restantes',
-                      style: GoogleFonts.inter(
-                        fontSize: 14,
-                        color: Colors.grey[300],
-                      ),
-                    ),
-                  ],
-                ),
+              child: const Icon(
+                Icons.restaurant,
+                color: Color(0xFF22C55E),
+                size: 24,
               ),
-              const Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 16),
-            ],
-          ),
-        ],
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Dieta do Dia',
+                    style: GoogleFonts.inter(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    '2500 kcal restantes',
+                    style: GoogleFonts.inter(
+                      fontSize: 14,
+                      color: Colors.grey[300],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 16),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildWeeklyProgressSection() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: const Color(0xFF2D4A42),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF22C55E).withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(
-                  Icons.trending_up,
-                  color: Color(0xFF22C55E),
-                  size: 24,
-                ),
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedIndex = 3;
+        });
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: const Color(0xFF2D4A42),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: const Color(0xFF22C55E).withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(12),
               ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Progresso Semanal',
-                      style: GoogleFonts.inter(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Text(
-                      '4/5 treinos concluídos',
-                      style: GoogleFonts.inter(
-                        fontSize: 14,
-                        color: Colors.grey[300],
-                      ),
-                    ),
-                  ],
-                ),
+              child: const Icon(
+                Icons.trending_up,
+                color: Color(0xFF22C55E),
+                size: 24,
               ),
-              const Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 16),
-            ],
-          ),
-        ],
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Progresso Semanal',
+                    style: GoogleFonts.inter(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    '4/5 treinos concluídos',
+                    style: GoogleFonts.inter(
+                      fontSize: 14,
+                      color: Colors.grey[300],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 16),
+          ],
+        ),
       ),
     );
   }
@@ -303,28 +309,35 @@ class _StudentDashboardScreenState extends ConsumerState<StudentDashboardScreen>
       child: Row(
         children: [
           Expanded(
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              decoration: BoxDecoration(
-                color: const Color(0xFF2D4A42),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.add, color: Color(0xFF22C55E), size: 20),
-                    const SizedBox(width: 8),
-                    Text(
-                      'Registrar\nRefeição',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.inter(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  _selectedIndex = 2;
+                });
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF2D4A42),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.add, color: Color(0xFF22C55E), size: 20),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Registrar\nRefeição',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.inter(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -350,7 +363,8 @@ class _StudentDashboardScreenState extends ConsumerState<StudentDashboardScreen>
                       const Icon(Icons.play_arrow, color: Colors.black, size: 20),
                       const SizedBox(width: 8),
                       Text(
-                        'Iniciar',
+                        'Iniciar\nTreino',
+                        textAlign: TextAlign.center,
                         style: GoogleFonts.inter(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -398,13 +412,20 @@ class _StudentDashboardScreenState extends ConsumerState<StudentDashboardScreen>
               color: Colors.white,
             ),
           ),
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: const Color(0xFF2D4A42),
-              borderRadius: BorderRadius.circular(8),
+          GestureDetector(
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Busca em desenvolvimento')),
+              );
+            },
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: const Color(0xFF2D4A42),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Icon(Icons.search, color: Colors.grey, size: 20),
             ),
-            child: const Icon(Icons.search, color: Colors.grey, size: 20),
           ),
         ],
       ),
@@ -419,9 +440,19 @@ class _StudentDashboardScreenState extends ConsumerState<StudentDashboardScreen>
         'duration': '45min',
       },
       {
-        'name': 'Foco em Pernas e Glúteos',
+        'name': 'Treino B - Costas e Bíceps',
+        'exercises': '6 exercícios',
+        'duration': '50min',
+      },
+      {
+        'name': 'Treino C - Pernas e Glúteos',
         'exercises': '6 exercícios',
         'duration': '60min',
+      },
+      {
+        'name': 'Treino D - Ombros e Abdômen',
+        'exercises': '5 exercícios',
+        'duration': '40min',
       },
       {
         'name': 'Cardio Intenso',
@@ -461,13 +492,18 @@ class _StudentDashboardScreenState extends ConsumerState<StudentDashboardScreen>
                         ),
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF22C55E).withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(8),
+                    GestureDetector(
+                      onTap: () {
+                        _showWorkoutOptions(workout['name']!);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF22C55E).withValues(alpha: 0.2),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: const Icon(Icons.more_vert, color: Colors.grey, size: 16),
                       ),
-                      child: const Icon(Icons.more_vert, color: Colors.grey, size: 16),
                     ),
                   ],
                 ),
@@ -491,7 +527,7 @@ class _StudentDashboardScreenState extends ConsumerState<StudentDashboardScreen>
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      'Duração estimada: ${workout['duration']!}',
+                      'Duração: ${workout['duration']!}',
                       style: GoogleFonts.inter(
                         fontSize: 14,
                         color: Colors.grey[300],
@@ -500,19 +536,24 @@ class _StudentDashboardScreenState extends ConsumerState<StudentDashboardScreen>
                   ],
                 ),
                 const SizedBox(height: 12),
-                Container(
-                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF22C55E),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Iniciar ...',
-                      style: GoogleFonts.inter(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                GestureDetector(
+                  onTap: () {
+                    context.push('/workout/${index + 1}');
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF22C55E),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Iniciar Treino',
+                        style: GoogleFonts.inter(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   ),
@@ -522,6 +563,72 @@ class _StudentDashboardScreenState extends ConsumerState<StudentDashboardScreen>
           ),
         );
       }).toList(),
+    );
+  }
+
+  void _showWorkoutOptions(String workoutName) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: const Color(0xFF2D4A42),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (context) => Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              workoutName,
+              style: GoogleFonts.inter(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 24),
+            ListTile(
+              leading: const Icon(Icons.visibility, color: Color(0xFF22C55E)),
+              title: Text(
+                'Ver Detalhes',
+                style: GoogleFonts.inter(color: Colors.white),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Ver detalhes em desenvolvimento')),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.edit, color: Color(0xFF22C55E)),
+              title: Text(
+                'Editar Treino',
+                style: GoogleFonts.inter(color: Colors.white),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Edição em desenvolvimento')),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.share, color: Color(0xFF22C55E)),
+              title: Text(
+                'Compartilhar',
+                style: GoogleFonts.inter(color: Colors.white),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Compartilhamento em desenvolvimento')),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -535,13 +642,31 @@ class _StudentDashboardScreenState extends ConsumerState<StudentDashboardScreen>
             decoration: const BoxDecoration(
               color: Color(0xFF1B2B2A),
             ),
-            child: Text(
-              'Dieta',
-              style: GoogleFonts.inter(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Dieta',
+                  style: GoogleFonts.inter(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    _showAddMealDialog();
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF22C55E),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Icon(Icons.add, color: Colors.black, size: 20),
+                  ),
+                ),
+              ],
             ),
           ),
           Container(
@@ -570,6 +695,47 @@ class _StudentDashboardScreenState extends ConsumerState<StudentDashboardScreen>
               ],
             ),
           ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 24),
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: const Color(0xFF2D4A42),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Meta Diária',
+                      style: GoogleFonts.inter(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      '2100 / 2500 kcal',
+                      style: GoogleFonts.inter(
+                        fontSize: 14,
+                        color: const Color(0xFF22C55E),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                LinearProgressIndicator(
+                  value: 0.84,
+                  backgroundColor: Colors.grey[800],
+                  valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF22C55E)),
+                  minHeight: 8,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ],
+            ),
+          ),
           const SizedBox(height: 24),
         ],
       ),
@@ -577,37 +743,73 @@ class _StudentDashboardScreenState extends ConsumerState<StudentDashboardScreen>
   }
 
   Widget _buildDietItem(String name, String calories, String time) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                name,
-                style: GoogleFonts.inter(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+    return GestureDetector(
+      onTap: () {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Ver detalhes de $name')),
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: GoogleFonts.inter(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-              Text(
-                time,
-                style: GoogleFonts.inter(
-                  fontSize: 12,
-                  color: Colors.grey[400],
+                Text(
+                  time,
+                  style: GoogleFonts.inter(
+                    fontSize: 12,
+                    color: Colors.grey[400],
+                  ),
                 ),
+              ],
+            ),
+            Text(
+              calories,
+              style: GoogleFonts.inter(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: const Color(0xFF22C55E),
               ),
-            ],
-          ),
-          Text(
-            calories,
-            style: GoogleFonts.inter(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              color: const Color(0xFF22C55E),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showAddMealDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFF2D4A42),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        title: Text(
+          'Adicionar Refeição',
+          style: GoogleFonts.inter(color: Colors.white),
+        ),
+        content: Text(
+          'Funcionalidade em desenvolvimento',
+          style: GoogleFonts.inter(color: Colors.grey[400]),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(
+              'OK',
+              style: GoogleFonts.inter(color: const Color(0xFF22C55E)),
             ),
           ),
         ],
@@ -653,24 +855,31 @@ class _StudentDashboardScreenState extends ConsumerState<StudentDashboardScreen>
               ),
             ],
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            decoration: BoxDecoration(
-              color: const Color(0xFF2D4A42),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Row(
-              children: [
-                Text(
-                  'Peso Corporal',
-                  style: GoogleFonts.inter(
-                    fontSize: 12,
-                    color: Colors.grey[300],
+          GestureDetector(
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Filtros em desenvolvimento')),
+              );
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              decoration: BoxDecoration(
+                color: const Color(0xFF2D4A42),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                children: [
+                  Text(
+                    'Peso Corporal',
+                    style: GoogleFonts.inter(
+                      fontSize: 12,
+                      color: Colors.grey[300],
+                    ),
                   ),
-                ),
-                const SizedBox(width: 4),
-                const Icon(Icons.arrow_drop_down, color: Colors.grey, size: 16),
-              ],
+                  const SizedBox(width: 4),
+                  const Icon(Icons.arrow_drop_down, color: Colors.grey, size: 16),
+                ],
+              ),
             ),
           ),
         ],
@@ -757,6 +966,8 @@ class _StudentDashboardScreenState extends ConsumerState<StudentDashboardScreen>
                       },
                     ),
                   ),
+                  rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
                 ),
                 borderData: FlBorderData(show: false),
                 lineBarsData: [
@@ -773,6 +984,10 @@ class _StudentDashboardScreenState extends ConsumerState<StudentDashboardScreen>
                     color: const Color(0xFF22C55E),
                     barWidth: 3,
                     dotData: const FlDotData(show: false),
+                    belowBarData: BarAreaData(
+                      show: true,
+                      color: const Color(0xFF22C55E).withValues(alpha: 0.1),
+                    ),
                   ),
                 ],
               ),
@@ -795,57 +1010,71 @@ class _StudentDashboardScreenState extends ConsumerState<StudentDashboardScreen>
   }
 
   Widget _buildTimeFilterButton(String label, bool isActive) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        color: isActive ? const Color(0xFF22C55E) : const Color(0xFF1A2A2A),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(
-        label,
-        style: GoogleFonts.inter(
-          fontSize: 12,
-          fontWeight: FontWeight.bold,
-          color: isActive ? Colors.black : Colors.grey[400],
+    return GestureDetector(
+      onTap: () {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Filtrar por $label')),
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          color: isActive ? const Color(0xFF22C55E) : const Color(0xFF1A2A2A),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Text(
+          label,
+          style: GoogleFonts.inter(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: isActive ? Colors.black : Colors.grey[400],
+          ),
         ),
       ),
     );
   }
 
   Widget _buildBodyMeasurements() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: const Color(0xFF2D4A42),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Medidas Corporais',
-                style: GoogleFonts.inter(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+    return GestureDetector(
+      onTap: () {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Ver medidas detalhadas')),
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: const Color(0xFF2D4A42),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Medidas Corporais',
+                  style: GoogleFonts.inter(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                'Cintura: 85cm, Quadril: 102cm',
-                style: GoogleFonts.inter(
-                  fontSize: 12,
-                  color: Colors.grey[400],
+                const SizedBox(height: 4),
+                Text(
+                  'Cintura: 85cm, Quadril: 102cm',
+                  style: GoogleFonts.inter(
+                    fontSize: 12,
+                    color: Colors.grey[400],
+                  ),
                 ),
-              ),
-            ],
-          ),
-          const Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 16),
-        ],
+              ],
+            ),
+            const Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 16),
+          ],
+        ),
       ),
     );
   }
@@ -872,11 +1101,19 @@ class _StudentDashboardScreenState extends ConsumerState<StudentDashboardScreen>
                   color: Colors.white,
                 ),
               ),
-              Text(
-                'Antes e Agora',
-                style: GoogleFonts.inter(
-                  fontSize: 12,
-                  color: Colors.grey[400],
+              GestureDetector(
+                onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Adicionar foto em desenvolvimento')),
+                  );
+                },
+                child: Text(
+                  'Adicionar',
+                  style: GoogleFonts.inter(
+                    fontSize: 12,
+                    color: const Color(0xFF22C55E),
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],
@@ -884,24 +1121,59 @@ class _StudentDashboardScreenState extends ConsumerState<StudentDashboardScreen>
           const SizedBox(height: 16),
           Row(
             children: [
-              Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF1A2A2A),
-                  borderRadius: BorderRadius.circular(12),
+              GestureDetector(
+                onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Ver foto')),
+                  );
+                },
+                child: Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF1A2A2A),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Icon(Icons.person, color: Colors.grey, size: 32),
                 ),
-                child: const Icon(Icons.person, color: Colors.grey, size: 32),
               ),
               const SizedBox(width: 12),
-              Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF1A2A2A),
-                  borderRadius: BorderRadius.circular(12),
+              GestureDetector(
+                onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Ver foto')),
+                  );
+                },
+                child: Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF1A2A2A),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Icon(Icons.person, color: Colors.grey, size: 32),
                 ),
-                child: const Icon(Icons.person, color: Colors.grey, size: 32),
+              ),
+              const SizedBox(width: 12),
+              GestureDetector(
+                onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Adicionar foto')),
+                  );
+                },
+                child: Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF22C55E).withValues(alpha: 0.2),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: const Color(0xFF22C55E),
+                      width: 2,
+                    ),
+                  ),
+                  child: const Icon(Icons.add, color: Color(0xFF22C55E), size: 32),
+                ),
               ),
             ],
           ),
@@ -911,46 +1183,80 @@ class _StudentDashboardScreenState extends ConsumerState<StudentDashboardScreen>
   }
 
   Widget _buildMaxLoad() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: const Color(0xFF2D4A42),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Carga Máx: Supino',
-                style: GoogleFonts.inter(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+    return GestureDetector(
+      onTap: () {
+        _showAddMaxLoadDialog();
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: const Color(0xFF2D4A42),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Carga Máx: Supino',
+                  style: GoogleFonts.inter(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                '8RM: 95kg +5kg',
-                style: GoogleFonts.inter(
-                  fontSize: 12,
-                  color: const Color(0xFF22C55E),
-                  fontWeight: FontWeight.bold,
+                const SizedBox(height: 4),
+                Text(
+                  '8RM: 95kg +5kg',
+                  style: GoogleFonts.inter(
+                    fontSize: 12,
+                    color: const Color(0xFF22C55E),
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Container(
-            width: 56,
-            height: 56,
-            decoration: BoxDecoration(
-              color: const Color(0xFF22C55E),
-              borderRadius: BorderRadius.circular(28),
+              ],
             ),
-            child: const Icon(Icons.add, color: Colors.black, size: 28),
+            Container(
+              width: 56,
+              height: 56,
+              decoration: BoxDecoration(
+                color: const Color(0xFF22C55E),
+                borderRadius: BorderRadius.circular(28),
+              ),
+              child: const Icon(Icons.add, color: Colors.black, size: 28),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showAddMaxLoadDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFF2D4A42),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        title: Text(
+          'Adicionar Carga Máxima',
+          style: GoogleFonts.inter(color: Colors.white),
+        ),
+        content: Text(
+          'Funcionalidade em desenvolvimento',
+          style: GoogleFonts.inter(color: Colors.grey[400]),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(
+              'OK',
+              style: GoogleFonts.inter(color: const Color(0xFF22C55E)),
+            ),
           ),
         ],
       ),
@@ -967,13 +1273,33 @@ class _StudentDashboardScreenState extends ConsumerState<StudentDashboardScreen>
             decoration: const BoxDecoration(
               color: Color(0xFF1B2B2A),
             ),
-            child: Text(
-              'Chat',
-              style: GoogleFonts.inter(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Chat',
+                  style: GoogleFonts.inter(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Nova conversa em desenvolvimento')),
+                    );
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF22C55E),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Icon(Icons.add, color: Colors.black, size: 20),
+                  ),
+                ),
+              ],
             ),
           ),
           Container(
@@ -996,8 +1322,8 @@ class _StudentDashboardScreenState extends ConsumerState<StudentDashboardScreen>
                 ),
                 const SizedBox(height: 16),
                 _buildChatItem('João Personal', 'Ótimo treino ontem!', '10:30'),
-                _buildChatItem('Nutricionista', 'Sua dieta está ótima', '09:15'),
-                _buildChatItem('Comunidade', 'Novo desafio disponível', '08:00'),
+                _buildChatItem('Nutricionista Ana', 'Sua dieta está ótima', '09:15'),
+                _buildChatItem('Grupo FitDay', 'Novo desafio disponível', '08:00'),
               ],
             ),
           ),
@@ -1008,50 +1334,57 @@ class _StudentDashboardScreenState extends ConsumerState<StudentDashboardScreen>
   }
 
   Widget _buildChatItem(String name, String message, String time) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12),
-      child: Row(
-        children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              color: const Color(0xFF22C55E).withValues(alpha: 0.2),
-              borderRadius: BorderRadius.circular(24),
+    return GestureDetector(
+      onTap: () {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Abrir conversa com $name')),
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        child: Row(
+          children: [
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: const Color(0xFF22C55E).withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(24),
+              ),
+              child: const Icon(Icons.person, color: Color(0xFF22C55E), size: 24),
             ),
-            child: const Icon(Icons.person, color: Color(0xFF22C55E), size: 24),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name,
-                  style: GoogleFonts.inter(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: GoogleFonts.inter(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                Text(
-                  message,
-                  style: GoogleFonts.inter(
-                    fontSize: 12,
-                    color: Colors.grey[400],
+                  Text(
+                    message,
+                    style: GoogleFonts.inter(
+                      fontSize: 12,
+                      color: Colors.grey[400],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Text(
-            time,
-            style: GoogleFonts.inter(
-              fontSize: 12,
-              color: Colors.grey[500],
+            Text(
+              time,
+              style: GoogleFonts.inter(
+                fontSize: 12,
+                color: Colors.grey[500],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -1076,13 +1409,26 @@ class _StudentDashboardScreenState extends ConsumerState<StudentDashboardScreen>
       decoration: const BoxDecoration(
         color: Color(0xFF1B2B2A),
       ),
-      child: Text(
-        'Perfil',
-        style: GoogleFonts.inter(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Perfil',
+            style: GoogleFonts.inter(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Editar foto em desenvolvimento')),
+              );
+            },
+            child: const Icon(Icons.edit, color: Color(0xFF22C55E), size: 24),
+          ),
+        ],
       ),
     );
   }
@@ -1136,24 +1482,29 @@ class _StudentDashboardScreenState extends ConsumerState<StudentDashboardScreen>
           _buildProfileInfoRow('Objetivo', 'Hipertrofia Muscular'),
           _buildProfileInfoRow('Peso', '75 kg'),
           _buildProfileInfoRow('Altura', '1.80 m'),
-          _buildProfileInfoRow('Restrições', 'Lesão no ombro direito'),
+          _buildProfileInfoRow('IMC', '23.1'),
           const SizedBox(height: 16),
           SizedBox(
             width: double.infinity,
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              decoration: BoxDecoration(
-                color: const Color(0xFF22C55E),
-                borderRadius: BorderRadius.circular(12),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF22C55E),
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
-              child: Center(
-                child: Text(
-                  'Editar dados',
-                  style: GoogleFonts.inter(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Editar dados em desenvolvimento')),
+                );
+              },
+              child: Text(
+                'Editar Dados',
+                style: GoogleFonts.inter(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
                 ),
               ),
             ),
@@ -1161,20 +1512,25 @@ class _StudentDashboardScreenState extends ConsumerState<StudentDashboardScreen>
           const SizedBox(height: 12),
           SizedBox(
             width: double.infinity,
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              decoration: BoxDecoration(
-                color: const Color(0xFF1A2A2A),
-                borderRadius: BorderRadius.circular(12),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF1A2A2A),
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
-              child: Center(
-                child: Text(
-                  'Objetivos',
-                  style: GoogleFonts.inter(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Objetivos em desenvolvimento')),
+                );
+              },
+              child: Text(
+                'Meus Objetivos',
+                style: GoogleFonts.inter(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
               ),
             ),
@@ -1216,23 +1572,23 @@ class _StudentDashboardScreenState extends ConsumerState<StudentDashboardScreen>
         _buildProfileOption(
           'Notificações',
           Icons.notifications_outlined,
-          const Color(0xFF2563EB),
+          const Color(0xFF22C55E),
           hasToggle: true,
         ),
         _buildProfileOption(
           'Tema',
           Icons.brightness_4_outlined,
-          const Color(0xFF2563EB),
+          const Color(0xFF22C55E),
         ),
         _buildProfileOption(
           'Idioma',
           Icons.language,
-          const Color(0xFF2563EB),
+          const Color(0xFF22C55E),
         ),
         _buildProfileOption(
           'Suporte',
           Icons.headset_mic_outlined,
-          const Color(0xFF2563EB),
+          const Color(0xFF22C55E),
         ),
         _buildProfileOption(
           'Sair',
@@ -1251,55 +1607,99 @@ class _StudentDashboardScreenState extends ConsumerState<StudentDashboardScreen>
     bool isLogout = false,
     bool hasToggle = false,
   }) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: const Color(0xFF2D4A42),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.2),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Icon(icon, color: color, size: 24),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Text(
-              title,
-              style: GoogleFonts.inter(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: isLogout ? const Color(0xFFEF4444) : Colors.white,
-              ),
-            ),
-          ),
-          if (hasToggle)
+    return GestureDetector(
+      onTap: () {
+        if (isLogout) {
+          _showLogoutDialog();
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('$title em desenvolvimento')),
+          );
+        }
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: const Color(0xFF2D4A42),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          children: [
             Container(
-              width: 50,
-              height: 28,
+              width: 48,
+              height: 48,
               decoration: BoxDecoration(
-                color: const Color(0xFF22C55E).withValues(alpha: 0.3),
-                borderRadius: BorderRadius.circular(14),
+                color: color.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(12),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(2),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF22C55E),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+              child: Icon(icon, color: color, size: 24),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Text(
+                title,
+                style: GoogleFonts.inter(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: isLogout ? const Color(0xFFEF4444) : Colors.white,
                 ),
               ),
-            )
-          else
-            const Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 16),
+            ),
+            if (hasToggle)
+              Switch(
+                value: true,
+                onChanged: (value) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(value ? 'Notificações ativadas' : 'Notificações desativadas'),
+                    ),
+                  );
+                },
+                activeColor: const Color(0xFF22C55E),
+              )
+            else
+              const Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 16),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showLogoutDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFF2D4A42),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        title: Text(
+          'Sair',
+          style: GoogleFonts.inter(color: Colors.white),
+        ),
+        content: Text(
+          'Deseja realmente sair da sua conta?',
+          style: GoogleFonts.inter(color: Colors.grey[400]),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(
+              'Cancelar',
+              style: GoogleFonts.inter(color: Colors.white),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              context.go('/role-selection');
+            },
+            child: Text(
+              'Sair',
+              style: GoogleFonts.inter(color: const Color(0xFFEF4444)),
+            ),
+          ),
         ],
       ),
     );
